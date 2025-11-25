@@ -1,15 +1,143 @@
-*.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+# ----------------------------------------
+# ANDROID / ANDROID STUDIO
+# ----------------------------------------
+
+# Build system
+.gradle/
+build/
+**/build/
+*/build/
+
+# Local configuration
 local.properties
+/local.properties
+
+# Log files
+*.log
+
+# Android Studio generated folders
+captures/
+.externalNativeBuild/
+.cxx/
+
+# APK / AAB / outputs
+*.apk
+*.ap_
+*.aab
+output.json
+
+# Dalvik / ART
+*.dex
+
+# Java class files
+*.class
+
+# Generated files
+bin/
+gen/
+out/
+
+# Profiling
+*.hprof
+
+# Keystore files
+*.jks
+*.keystore
+
+# Google Services
+google-services.json
+
+# NDK
+obj/
+
+# ----------------------------------------
+# INTELLIJ / ANDROID STUDIO (.idea)
+# ----------------------------------------
+
+*.iml
+.idea/
+.idea/caches/
+.idea/libraries/
+.idea/modules.xml
+.idea/workspace.xml
+.idea/navEditor.xml
+.idea/assetWizardSettings.xml
+.idea/tasks.xml
+.idea/shelf/
+.idea/compiler.xml
+.idea/misc.xml
+.idea/jarRepositories.xml
+.idea/uiDesigner.xml
+.idea/dictionaries
+.idea/vcs.xml
+.idea/gradle.xml
+.idea/encodings.xml
+
+# ----------------------------------------
+# GRADLE
+# ----------------------------------------
+
+# Avoid ignoring Gradle wrapper
+!gradle-wrapper.jar
+!gradle-wrapper.properties
+
+.gradletasknamecache
+gradle-app.setting
+
+# ----------------------------------------
+# WINDOWS
+# ----------------------------------------
+
+# System files
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Installer packages
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+
+# Shortcuts
+*.lnk
+
+# ----------------------------------------
+# POWERSHELL
+# ----------------------------------------
+
+*.dll
+*.zip
+
+# ----------------------------------------
+# macOS
+# ----------------------------------------
+
+.DS_Store
+
+# ----------------------------------------
+# OTHER
+# ----------------------------------------
+
+# Crash logs
+hs_err_pid*
+*.stackdump
+
+# Eclipse (if imported)
+.project
+.classpath
+.settings/
+
+# Maven / Java
+*.war
+*.ear
+
+# Crashlytics
+crashlytics.properties
+crashlytics-build.properties
+fabric.properties
+com_crashlytics_export_strings.xml
