@@ -1,5 +1,6 @@
 package com.example.nadanao
 
+import HomePage
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -18,6 +19,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.nadanao.ui.theme.NadaNaoTheme
 import androidx.compose.foundation.background
 import androidx.compose.ui.graphics.Color
+import com.example.nadanao.front.components.ButtonCard
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,11 +52,8 @@ fun TelaComBackground(modifier: Modifier = Modifier) {
             contentScale = ContentScale.Crop
         )
 
-        // Conteúdo por cima do background
-        Greeting(
-            name = "Android",
-            modifier = modifier
-        )
+        HomePage()
+
     }
 }
 
