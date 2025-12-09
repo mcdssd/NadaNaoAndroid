@@ -1,10 +1,13 @@
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.nadanao.R
 import com.example.nadanao.front.components.ButtonCard
+import com.example.nadanao.front.components.SharkBanner
 
 @Composable
 fun HomePage() {
@@ -14,6 +17,26 @@ fun HomePage() {
             .fillMaxSize()
             .padding(24.dp)
     ) {
+
+
+
+
+
+        Row (modifier = Modifier.fillMaxWidth()) {
+
+            Spacer(Modifier.width(width = 5.dp))
+
+            Image(
+            painter = painterResource(id = R.drawable.titulohome),
+            contentDescription = "Nada Não",
+            modifier = Modifier
+                .height(120.dp)
+                .width(width = 150.dp)
+
+        )}
+
+
+        SharkBanner()
 
         Spacer(Modifier.height(32.dp))
 

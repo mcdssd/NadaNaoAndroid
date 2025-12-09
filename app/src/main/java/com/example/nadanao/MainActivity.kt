@@ -46,7 +46,7 @@ fun TelaComBackground(modifier: Modifier = Modifier) {
             .background(Color.Transparent)
     ) {
         Image(
-            painter = painterResource(id = R.drawable.background),
+            painter = painterResource(id = R.drawable.backgroundhome),
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
