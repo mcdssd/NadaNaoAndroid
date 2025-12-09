@@ -53,6 +53,7 @@ fun HomePage() {
                 icon = R.drawable.praialimpa,
                 backgroundColor = Color(0xFF8FF1FF),
                 modifier = Modifier.weight(1f)
+
             )
         }
 
