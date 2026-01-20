@@ -19,19 +19,33 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.nadanao.ui.theme.NadaNaoTheme
 import androidx.compose.foundation.background
 import androidx.compose.ui.graphics.Color
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.nadanao.front.components.ButtonCard
+import com.example.nadanao.viewmodel.MapViewModel
 
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
         setContent {
+            val mapViewModel: MapViewModel = viewModel()
+
             NadaNaoTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    TelaComBackground(
-                        modifier = Modifier.padding(innerPadding)
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Transparent)
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.backgroundhome),
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop
                     )
+
+                    AppNavigation(mapViewModel)
                 }
             }
         }
@@ -52,7 +66,7 @@ fun TelaComBackground(modifier: Modifier = Modifier) {
             contentScale = ContentScale.Crop
         )
 
-        AppNavigation()
+//        HomePage()
 
     }
 }

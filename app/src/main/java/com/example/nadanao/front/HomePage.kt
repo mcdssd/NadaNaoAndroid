@@ -1,10 +1,20 @@
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import androidx.navigation.NavHost
 import com.example.nadanao.R
@@ -13,6 +23,8 @@ import com.example.nadanao.front.components.SharkBanner
 
 @Composable
 fun HomePage(navController: NavController) {
+    var showPopup by remember { mutableStateOf(false) }
+
 
     Column(
         modifier = Modifier
@@ -21,20 +33,47 @@ fun HomePage(navController: NavController) {
     ) {
 
 
+        Row (modifier = Modifier.fillMaxWidth()) {
+
+            Spacer(Modifier.height(height = 50.dp))
+
+            Text(
+                text = "Recife, Pernambuco",
+                modifier = Modifier
+                    .clickable {
+                        showPopup = true
+                    }
+                    .padding(8.dp),
+                style = MaterialTheme.typography.titleLarge,
+                color = Color.Black
+            )
+
+            Text(
+                text = "27º C",
+                modifier = Modifier
+                    .clickable {
+                        showPopup = true
+                    }
+                    .padding(8.dp),
+                style = MaterialTheme.typography.titleLarge,
+                color = Color.Black
+            )
+
+
+        }
 
         Row (modifier = Modifier.fillMaxWidth()) {
 
             Spacer(Modifier.width(width = 5.dp))
 
             Image(
-            painter = painterResource(id = R.drawable.titulohome),
-            contentDescription = "Nada Não",
-            modifier = Modifier
-                .height(120.dp)
-                .width(width = 150.dp)
+                painter = painterResource(id = R.drawable.titulohome),
+                contentDescription = "Nada Não",
+                modifier = Modifier
+                    .height(120.dp)
+                    .width(width = 150.dp)
 
-        )}
-
+            )}
 
         SharkBanner()
 
@@ -86,4 +125,18 @@ fun HomePage(navController: NavController) {
             )
         }
     }
+
+    if (showPopup) {
+        Dialog(onDismissRequest = { showPopup = false }) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color.White, RoundedCornerShape(20.dp))
+                    .padding(24.dp)
+            ) {
+                Text("Conteúdo do popup aqui")
+            }
+        }
+    }
 }
+
