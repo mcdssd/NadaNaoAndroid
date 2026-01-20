@@ -5,20 +5,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavHost
 import com.example.nadanao.R
 import com.example.nadanao.front.components.ButtonCard
 import com.example.nadanao.front.components.SharkBanner
 
 @Composable
-fun HomePage() {
+fun HomePage(navController: NavController) {
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(24.dp)
     ) {
-
-
 
 
 
@@ -45,15 +45,20 @@ fun HomePage() {
                 title = "Água Boa pra Nadar?",
                 icon = R.drawable.aguaboa, // troque pelo seu ícone
                 backgroundColor = Color(0xFFF8A8B8),
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                onClick = {
+                    navController.navigate("Aguaboa")
+                }
             )
             Spacer(Modifier.width(16.dp))
             ButtonCard(
                 title = "Praia Tá Limpa?",
                 icon = R.drawable.praialimpa,
                 backgroundColor = Color(0xFF8FF1FF),
-                modifier = Modifier.weight(1f)
-
+                modifier = Modifier.weight(1f),
+                onClick = {
+                    navController.navigate("PraiaLimpa")
+                }
             )
         }
 
@@ -64,14 +69,20 @@ fun HomePage() {
                 title = "Por Dentro da Praia",
                 icon = R.drawable.pordentropraia,
                 backgroundColor = Color(0xFFFFEB77),
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                onClick = {
+                    navController.navigate("PorDentroPraia")
+                }
             )
             Spacer(Modifier.width(16.dp))
             ButtonCard(
                 title = "Checklist da Praia de Hoje",
                 icon = R.drawable.checklist,
                 backgroundColor = Color(0xFFE3C3FF),
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                onClick = {
+                    navController.navigate("Checklist")
+                }
             )
         }
     }
