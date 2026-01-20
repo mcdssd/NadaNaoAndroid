@@ -15,15 +15,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHost
 import com.example.nadanao.R
+import com.example.nadanao.front.MapPage
 import com.example.nadanao.front.components.ButtonCard
 import com.example.nadanao.front.components.SharkBanner
+import com.example.nadanao.viewmodel.MapViewModel
 
 @Composable
-fun HomePage(navController: NavController) {
+fun HomePage(navController: NavController, viewModel: MapViewModel) {
     var showPopup by remember { mutableStateOf(false) }
+    val local = viewModel.localSelecionada.value
 
 
     Column(
@@ -38,7 +42,11 @@ fun HomePage(navController: NavController) {
             Spacer(Modifier.height(height = 50.dp))
 
             Text(
-                text = "Recife, Pernambuco",
+                text = if (local == null) {
+                    "Recife, Pernambuco"
+                } else {
+                    "${local.latitude.format(4)}, ${local.longitude.format(4)}"
+                },
                 modifier = Modifier
                     .clickable {
                         showPopup = true
@@ -131,12 +139,16 @@ fun HomePage(navController: NavController) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .height(400.dp)
                     .background(Color.White, RoundedCornerShape(20.dp))
-                    .padding(24.dp)
             ) {
-                Text("Conteúdo do popup aqui")
+                MapPage(viewModel)
             }
         }
     }
+
+
 }
+private fun Double.format(decimals: Int): String =
+    "%.${decimals}f".format(this)
 

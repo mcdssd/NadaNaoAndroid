@@ -24,7 +24,7 @@ fun AppNavigation(viewModel: MapViewModel) {
     ) {
 
         composable("home") {
-            HomePage(navController)
+            HomePage(navController = navController, viewModel = viewModel)
         }
 
         composable("PraiaLimpa") {
@@ -43,8 +43,8 @@ fun AppNavigation(viewModel: MapViewModel) {
             PorDentroPraia()
         }
 
-        composable("mapa") {
-            MapPage(viewModel)
-        }
+//        composable("mapa") {
+//            MapPage(viewModel)
+//        }
     }
 }
