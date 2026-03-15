@@ -1,3 +1,7 @@
+
+import android.Manifest
+import android.content.pm.PackageManager
+import androidx.core.content.ContextCompat
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -6,12 +10,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -23,11 +29,50 @@ import com.example.nadanao.front.MapPage
 import com.example.nadanao.front.components.ButtonCard
 import com.example.nadanao.front.components.SharkBanner
 import com.example.nadanao.viewmodel.MapViewModel
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.example.nadanao.model.getPlaceName
+import com.google.android.gms.location.Priority
 
 @Composable
 fun HomePage(navController: NavController, viewModel: MapViewModel) {
     var showPopup by remember { mutableStateOf(false) }
-    val local = viewModel.localSelecionada.value
+
+    val context = LocalContext.current
+    val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
+
+    var local by remember { mutableStateOf<LatLng?>(null) }
+
+    var placeName by remember { mutableStateOf<String?>(null) }
+
+    LaunchedEffect(Unit) {
+
+        val permission = ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
+
+        if (permission == PackageManager.PERMISSION_GRANTED) {
+
+            fusedLocationClient
+                .getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, null)
+                .addOnSuccessListener { location ->
+
+                    location?.let {
+
+                        val latLng = LatLng(it.latitude, it.longitude)
+                        local = latLng
+
+                        placeName = getPlaceName(
+                            context,
+                            latLng.latitude,
+                            latLng.longitude
+                        )
+                    }
+                }
+        }
+    }
 
 
     Column(
@@ -37,15 +82,30 @@ fun HomePage(navController: NavController, viewModel: MapViewModel) {
     ) {
 
 
+
+
+        Row (modifier = Modifier.fillMaxWidth()) {
+
+            Spacer(Modifier.width(width = 5.dp))
+
+            Image(
+                painter = painterResource(id = R.drawable.titulohome),
+                contentDescription = "Nada Não",
+                modifier = Modifier
+                    .height(120.dp)
+                    .width(width = 150.dp)
+
+            )}
+
         Row (modifier = Modifier.fillMaxWidth()) {
 
             Spacer(Modifier.height(height = 50.dp))
 
             Text(
-                text = if (local == null) {
-                    "Recife, Pernambuco"
-                } else {
-                    "${local.latitude.format(4)}, ${local.longitude.format(4)}"
+                text = when {
+                    placeName != null -> placeName!!
+                    local != null -> "${local!!.latitude.format(4)}, ${local!!.longitude.format(4)}"
+                    else -> "Obtendo localização..."
                 },
                 modifier = Modifier
                     .clickable {
@@ -66,22 +126,7 @@ fun HomePage(navController: NavController, viewModel: MapViewModel) {
                 style = MaterialTheme.typography.titleLarge,
                 color = Color.Black
             )
-
-
         }
-
-        Row (modifier = Modifier.fillMaxWidth()) {
-
-            Spacer(Modifier.width(width = 5.dp))
-
-            Image(
-                painter = painterResource(id = R.drawable.titulohome),
-                contentDescription = "Nada Não",
-                modifier = Modifier
-                    .height(120.dp)
-                    .width(width = 150.dp)
-
-            )}
 
         SharkBanner()
 
@@ -94,7 +139,7 @@ fun HomePage(navController: NavController, viewModel: MapViewModel) {
                 backgroundColor = Color(0xFFF8A8B8),
                 modifier = Modifier.weight(1f),
                 onClick = {
-                    navController.navigate("Aguaboa")
+                    navController.navigate("AguaBoa")
                 }
             )
             Spacer(Modifier.width(16.dp))
@@ -142,7 +187,22 @@ fun HomePage(navController: NavController, viewModel: MapViewModel) {
                     .height(400.dp)
                     .background(Color.White, RoundedCornerShape(20.dp))
             ) {
-                MapPage(viewModel)
+                MapPage(
+                    viewModel = viewModel,
+                    userLocation = local,
+                    onLocationSelected = { latLng ->
+
+                        local = latLng
+
+                        placeName = getPlaceName(
+                            context,
+                            latLng.latitude,
+                            latLng.longitude
+                        )
+
+                        showPopup = false
+                    }
+                )
             }
         }
     }

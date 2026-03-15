@@ -9,18 +9,29 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.*
 
 @Composable
-fun MapPage(viewModel: MapViewModel) {
+fun MapPage(viewModel: MapViewModel, userLocation: LatLng?,
+            onLocationSelected: (LatLng) -> Unit) {
 
-    val recife = LatLng(-8.05, -34.9)
+
+    val defaultLocation = userLocation ?: LatLng(-8.05, -34.9)
+//    val recife = LatLng(-8.05, -34.9)
 
     val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(recife, 12f)
+        position = CameraPosition.fromLatLngZoom(defaultLocation, 12f)
     }
+
+//    val cameraPositionState = rememberCameraPositionState {
+//        position = CameraPosition.fromLatLngZoom(recife, 12f)
+//    }
 
     GoogleMap(
         modifier = Modifier.fillMaxSize(),
         cameraPositionState = cameraPositionState,
         onMapClick = { latLng ->
+
+            // avisa a HomePage
+            onLocationSelected(latLng)
+
             viewModel.setLocalSelecionada(latLng)
 
             viewModel.add(
