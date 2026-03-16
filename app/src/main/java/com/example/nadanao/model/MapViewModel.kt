@@ -1,8 +1,11 @@
 package com.example.nadanao.viewmodel
 
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.example.nadanao.api.WeatherService
 import com.example.nadanao.model.PontoMapa
 import com.google.android.gms.maps.model.LatLng
 import java.util.UUID
@@ -18,6 +21,11 @@ class MapViewModel : ViewModel() {
 
     private val _localSelecionada = mutableStateOf<LatLng?>(null)
     val localSelecionada = _localSelecionada
+
+    private val weatherService = WeatherService()
+
+    var temperature by mutableStateOf<Double?>(null)
+        private set
 
     fun setLocalSelecionada(latLng: LatLng) {
         _localSelecionada.value = latLng
@@ -42,5 +50,14 @@ class MapViewModel : ViewModel() {
 
     fun limparSelecao() {
         _pontoSelecionado.value = null
+    }
+
+    fun updateTemperature(lat: Double, lon: Double) {
+
+        weatherService.getTemperature(lat, lon) { temp ->
+
+            temperature = temp
+
+        }
     }
 }

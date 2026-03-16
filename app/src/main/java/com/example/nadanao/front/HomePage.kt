@@ -69,6 +69,11 @@ fun HomePage(navController: NavController, viewModel: MapViewModel) {
                             latLng.latitude,
                             latLng.longitude
                         )
+
+                        viewModel.updateTemperature(
+                            latLng.latitude,
+                            latLng.longitude
+                        )
                     }
                 }
         }
@@ -80,9 +85,6 @@ fun HomePage(navController: NavController, viewModel: MapViewModel) {
             .fillMaxSize()
             .padding(24.dp)
     ) {
-
-
-
 
         Row (modifier = Modifier.fillMaxWidth()) {
 
@@ -117,7 +119,9 @@ fun HomePage(navController: NavController, viewModel: MapViewModel) {
             )
 
             Text(
-                text = "27º C",
+                text = viewModel.temperature?.let {
+                    "${it.toInt()}º C"
+                } ?: "--º C",
                 modifier = Modifier
                     .clickable {
                         showPopup = true
@@ -196,6 +200,11 @@ fun HomePage(navController: NavController, viewModel: MapViewModel) {
 
                         placeName = getPlaceName(
                             context,
+                            latLng.latitude,
+                            latLng.longitude
+                        )
+
+                        viewModel.updateTemperature(
                             latLng.latitude,
                             latLng.longitude
                         )

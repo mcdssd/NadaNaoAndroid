@@ -2,6 +2,10 @@ package com.example.nadanao.front
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.example.nadanao.viewmodel.MapViewModel
 import com.google.android.gms.maps.model.CameraPosition
@@ -29,35 +33,28 @@ fun MapPage(viewModel: MapViewModel, userLocation: LatLng?,
         cameraPositionState = cameraPositionState,
         onMapClick = { latLng ->
 
-            // avisa a HomePage
-            onLocationSelected(latLng)
-
             viewModel.setLocalSelecionada(latLng)
 
-            viewModel.add(
-                nome = "Ponto ${latLng.latitude.format(4)}, ${latLng.longitude.format(4)}",
-                location = latLng
+            viewModel.updateTemperature(
+                latLng.latitude,
+                latLng.longitude
             )
+            onLocationSelected(latLng)
         }
     ) {
-        // marcadores que vêm do ViewModel
-        viewModel.pontos.forEach { ponto ->
-            val pos = LatLng(ponto.latitude, ponto.longitude)
+
+        viewModel.localSelecionada.value?.let { location ->
 
             Marker(
-                state = MarkerState(position = pos),
-                title = ponto.nome,
-                snippet = ponto.descricao,
-                onClick = {
-                    viewModel.setLocalSelecionada(pos)
-                    viewModel.selecionar(ponto)
-                    true
-                }
+                state = MarkerState(position = location),
+                title = "Local selecionado"
             )
+
         }
+
     }
 
-    // seu Dialog aparece quando seleciona
+    // Dialog
     viewModel.pontoSelecionado.value?.let { ponto ->
         PontoDialog(
             ponto = ponto,
